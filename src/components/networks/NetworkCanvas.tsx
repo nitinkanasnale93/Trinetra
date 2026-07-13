@@ -2,6 +2,7 @@
 
 import "@xyflow/react/dist/style.css";
 
+import React from "react";
 import { Edge, Node } from "@xyflow/react";
 import { Search } from "lucide-react";
 
@@ -176,7 +177,7 @@ export default function NetworkCanvas({
         nodeTypes={nodeTypes}
         selected={selected.id}
         focusNodeId={focusNodeId}
-        onNodeClick={(_, node) => {
+        onNodeClick={(_event: React.MouseEvent, node: Node) => {
           const entity = nodes.find(
             (item) => item.id === node.id
           );

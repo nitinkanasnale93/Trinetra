@@ -12,10 +12,23 @@ import {
 
 import AppShell from "@/components/layout/AppShell";
 import MetricCard from "@/components/dashboard/MetricCard";
-import KarnatakaMap from "@/components/geospatial/KarnatakaMap";
+import dynamic from "next/dynamic";
 import LoadingScreen from "@/components/geospatial/LoadingScreen";
 
+
 import { hotspots } from "@/data/hotspots";
+
+const KarnatakaMap = dynamic(
+  () => import("@/components/geospatial/KarnatakaMap"),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex h-full items-center justify-center">
+        Loading map...
+      </div>
+    ),
+  }
+);
 
 const metrics = [
   {
@@ -85,30 +98,31 @@ export default function GeospatialPage() {
     }
   }, []);
 
+
   const toggleLayer = (layer: string) => {
-    setActiveLayers((layers) =>
-      layers.includes(layer)
-        ? layers.filter((l) => l !== layer)
-        : [...layers, layer]
-    );
+  setActiveLayers((layers) =>
+    layers.includes(layer)
+      ? layers.filter((l) => l !== layer)
+      : [...layers, layer]
+  );
   };
 
-  return (
   if (loading) {
-  return (
-    <LoadingScreen
-      onComplete={() => {
-        sessionStorage.setItem(
-          "trinetra-geospatial-loaded",
-          "true"
-        );
-        setLoading(false);
-      }}
-    />
-  );
-}
+    return (
+      <LoadingScreen
+        onComplete={() => {
+          sessionStorage.setItem(
+            "trinetra-geospatial-loaded",
+            "true"
+          );
 
-return (
+          setLoading(false);
+        }}
+      />
+    );
+  }
+
+  return (
   <AppShell>
 
       <p className="mb-2 text-sm text-[var(--text-secondary)]">
@@ -138,13 +152,11 @@ return (
 
   <div className="relative h-full overflow-hidden">
 
-    {!loading && (
-      <KarnatakaMap
-        hotspots={hotspots}
-        selectedHotspot={selectedHotspot}
-        onSelect={setSelectedHotspot}
-      />
-    )}
+    <KarnatakaMap
+      hotspots={hotspots}
+      selectedHotspot={selectedHotspot}
+      onSelect={setSelectedHotspot}
+    />
 
     <div className="absolute left-5 top-5 z-[1000] rounded-xl border border-[var(--border)] bg-white/90 px-4 py-3 shadow-lg backdrop-blur">
 

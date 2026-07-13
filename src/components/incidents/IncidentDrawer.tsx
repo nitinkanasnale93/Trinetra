@@ -9,6 +9,7 @@ import {
   ShieldCheck,
   Sparkles,
   X,
+  type LucideIcon,
 } from "lucide-react";
 
 import { Incident } from "@/types/incident";
@@ -211,7 +212,7 @@ export default function IncidentDrawer({
 }
 
 type SignalProps = {
-  icon: React.ElementType;
+  icon: LucideIcon;
   title: string;
   description: string;
 };
@@ -225,9 +226,8 @@ function Signal({
     <div className="flex items-start gap-4 rounded-xl border border-[var(--border)] p-4">
       <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[var(--surface-soft)]">
         <Icon
-          size={15}
+          className="h-[15px] w-[15px] text-[var(--text-secondary)]"
           strokeWidth={1.8}
-          className="text-[var(--text-secondary)]"
         />
       </div>
 

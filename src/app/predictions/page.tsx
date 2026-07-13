@@ -4,6 +4,7 @@ import {
   BrainCircuit,
   CheckCircle2,
   Sparkles,
+  type LucideIcon,
 } from "lucide-react";
 
 import AppShell from "@/components/layout/AppShell";
@@ -169,7 +170,7 @@ function TrustItem({
   label,
   score,
 }: {
-  icon: React.ElementType;
+  icon: LucideIcon;
   label: string;
   score: string;
 }) {

@@ -4,15 +4,15 @@ import "leaflet/dist/leaflet.css";
 
 import { useEffect, useState } from "react";
 
+import L from "leaflet";
+
 import {
   MapContainer,
+  TileLayer,
   Marker,
   Popup,
-  TileLayer,
   useMap,
 } from "react-leaflet";
-
-import L from "leaflet";
 
 import MapIntro from "./MapIntro";
 
@@ -33,25 +33,6 @@ type Props = {
   onSelect: (hotspot: Hotspot) => void;
 };
 
-const goldIcon = new L.DivIcon({
-  className: "",
-  html: `
-    <div
-      style="
-        width:18px;
-        height:18px;
-        background:#C9A74D;
-        border-radius:50%;
-        border:4px solid white;
-        box-shadow:0 0 18px rgba(201,167,77,.55);
-        animation:pulse 2s infinite;
-      ">
-    </div>
-  `,
-  iconSize: [18, 18],
-  iconAnchor: [9, 9],
-});
-
 function FlyToHotspot({
   hotspot,
 }: {
@@ -64,7 +45,7 @@ function FlyToHotspot({
       [hotspot.lat, hotspot.lng],
       9,
       {
-        duration: 1.6,
+        duration: 1.8,
       }
     );
   }, [hotspot, map]);
@@ -80,6 +61,31 @@ export default function KarnatakaMap({
   const [introComplete, setIntroComplete] =
     useState(false);
 
+  const [goldIcon, setGoldIcon] =
+    useState<L.DivIcon | null>(null);
+
+  useEffect(() => {
+    const icon = new L.DivIcon({
+      className: "",
+      html: `
+        <div
+          style="
+            width:18px;
+            height:18px;
+            background:#C9A74D;
+            border-radius:50%;
+            border:4px solid white;
+            box-shadow:0 0 18px rgba(201,167,77,.55);
+          ">
+        </div>
+      `,
+      iconSize: [18, 18],
+      iconAnchor: [9, 9],
+    });
+
+    setGoldIcon(icon);
+  }, []);
+
   return (
     <MapContainer
       center={[14.2, 77.2]}
@@ -91,15 +97,13 @@ export default function KarnatakaMap({
       className="h-full w-full"
     >
       {/* Cinematic Intro */}
-
       <MapIntro
         onComplete={() =>
           setIntroComplete(true)
         }
       />
 
-      {/* Hotspot Zoom after intro */}
-
+      {/* Fly to selected hotspot after intro */}
       {introComplete && (
         <FlyToHotspot
           hotspot={selectedHotspot}
@@ -111,51 +115,54 @@ export default function KarnatakaMap({
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
 
-      {hotspots.map((hotspot) => (
-        <Marker
-          key={hotspot.id}
-          position={[
-            hotspot.lat,
-            hotspot.lng,
-          ]}
-          icon={goldIcon}
-          eventHandlers={{
-            click: () => onSelect(hotspot),
-          }}
-        >
-          <Popup>
-            <div className="space-y-2">
-              <h3 className="text-base font-semibold">
-                {hotspot.district}
-              </h3>
+      {goldIcon &&
+        hotspots.map((hotspot) => (
+          <Marker
+            key={hotspot.id}
+            position={[
+              hotspot.lat,
+              hotspot.lng,
+            ]}
+            icon={goldIcon}
+            eventHandlers={{
+              click: () =>
+                onSelect(hotspot),
+            }}
+          >
 
-              <p>
-                <strong>ID:</strong>{" "}
-                {hotspot.id}
-              </p>
+                        <Popup>
+              <div className="space-y-2">
+                <h3 className="text-base font-semibold">
+                  {hotspot.district}
+                </h3>
 
-              <p>
-                <strong>Incidents:</strong>{" "}
-                {hotspot.incidents}
-              </p>
+                <p>
+                  <strong>ID:</strong>{" "}
+                  {hotspot.id}
+                </p>
 
-              <p>
-                <strong>Risk:</strong>{" "}
-                {hotspot.risk}
-              </p>
+                <p>
+                  <strong>Incidents:</strong>{" "}
+                  {hotspot.incidents}
+                </p>
 
-              <p>
-                <strong>Confidence:</strong>{" "}
-                {hotspot.confidence}%
-              </p>
+                <p>
+                  <strong>Risk:</strong>{" "}
+                  {hotspot.risk}
+                </p>
 
-              <p className="pt-2 text-xs text-gray-600">
-                {hotspot.insight}
-              </p>
-            </div>
-          </Popup>
-        </Marker>
-      ))}
+                <p>
+                  <strong>Confidence:</strong>{" "}
+                  {hotspot.confidence}%
+                </p>
+
+                <p className="pt-2 text-xs text-gray-600">
+                  {hotspot.insight}
+                </p>
+              </div>
+            </Popup>
+          </Marker>
+        ))}
     </MapContainer>
   );
 }

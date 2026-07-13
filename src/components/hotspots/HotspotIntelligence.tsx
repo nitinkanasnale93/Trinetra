@@ -4,6 +4,7 @@ import {
   MapPinned,
   ShieldCheck,
   Sparkles,
+  type LucideIcon,
 } from "lucide-react";
 
 export default function HotspotIntelligence() {
@@ -80,7 +81,7 @@ export default function HotspotIntelligence() {
 }
 
 type SignalProps = {
-  icon: React.ElementType;
+  icon: LucideIcon;
   label: string;
   value: string;
 };
