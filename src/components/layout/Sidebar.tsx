@@ -142,35 +142,42 @@ export default function Sidebar() {
         ))}
       </nav>
 
-      <div className="border-t border-[var(--border)] p-3">
-        <button className="flex h-10 w-full items-center gap-3 rounded-lg px-3 text-sm text-[var(--text-secondary)] transition hover:bg-[var(--surface-soft)]">
-          <Settings size={17} strokeWidth={1.8} />
+        <div className="border-t border-[var(--border)] p-3">
+          <Link
+            href="/settings"
+            className={`flex h-10 w-full items-center gap-3 rounded-lg px-3 text-sm transition ${
+              pathname.startsWith("/settings")
+                ? "bg-[var(--surface-soft)] font-medium text-[var(--navy)]"
+                : "text-[var(--text-secondary)] hover:bg-[var(--surface-soft)] hover:text-[var(--navy)]"
+            }`}
+          >
+            <Settings size={17} strokeWidth={1.8} />
 
-          <span>Settings</span>
-        </button>
+            <span>Settings</span>
+          </Link>
 
-        <div className="mt-2 flex items-center gap-3 rounded-xl px-3 py-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--gold-soft)] text-xs font-semibold text-[var(--gold)]">
-            NK
+          <div className="mt-2 flex items-center gap-3 rounded-xl px-3 py-3">
+            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--gold-soft)] text-xs font-semibold text-[var(--gold)]">
+              NK
+            </div>
+
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-sm font-medium text-[var(--text-primary)]">
+                Nitin Kanasnale
+              </p>
+
+              <p className="truncate text-[11px] text-[var(--text-muted)]">
+                Intelligence Analyst
+              </p>
+            </div>
+
+            <Bell
+              size={16}
+              strokeWidth={1.8}
+              className="text-[var(--text-muted)]"
+            />
           </div>
-
-          <div className="min-w-0 flex-1">
-            <p className="truncate text-sm font-medium text-[var(--text-primary)]">
-              Nitin Kanasnale
-            </p>
-
-            <p className="truncate text-[11px] text-[var(--text-muted)]">
-              Intelligence Analyst
-            </p>
-          </div>
-
-          <Bell
-            size={16}
-            strokeWidth={1.8}
-            className="text-[var(--text-muted)]"
-          />
         </div>
-      </div>
     </aside>
   );
 }
