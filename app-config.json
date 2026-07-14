@@ -1,0 +1,8 @@
+{
+  "command": "PORT=$X_ZOHO_CATALYST_LISTEN_PORT HOSTNAME=0.0.0.0 node .next/standalone/server.js",
+  "build_path": ".",
+  "stack": "node22",
+  "memory": 512,
+  "catalyst_auth": false,
+  "env_variables": {}
+}
