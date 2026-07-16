@@ -1,11 +1,4 @@
-import dynamic from "next/dynamic";
-
-const DashboardScene = dynamic(
-  () => import("@/components/three/DashboardScene"),
-  {
-    ssr: false,
-  }
-);
+import DashboardScene from "@/components/three/DashboardSceneClient";
 
 import {
   BellRing,
@@ -149,6 +142,7 @@ const API_BASE_URL =
 
 
 async function getIntelligenceOverview(): Promise<IntelligenceOverview> {
+  console.log("API_BASE_URL =", API_BASE_URL);
   const response = await fetch(
     `${API_BASE_URL}/intelligence-overview`,
     {
