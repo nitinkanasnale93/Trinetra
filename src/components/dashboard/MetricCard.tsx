@@ -20,42 +20,42 @@ export default function MetricCard({
   icon: Icon,
 }: MetricCardProps) {
   return (
-    <GlassCard className="group p-6">
-      <div className="flex items-start justify-between">
-        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--gold-soft)] transition group-hover:scale-105">
+    <GlassCard className="group h-full p-5 sm:p-6">
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[var(--gold-soft)] transition duration-300 group-hover:scale-105 sm:h-12 sm:w-12">
           <Icon
-            size={22}
-            className="text-[var(--gold)]"
+            size={20}
+            className="text-[var(--gold)] sm:h-[22px] sm:w-[22px]"
           />
         </div>
 
         <div
-          className={`flex items-center gap-1 rounded-full px-3 py-1 text-xs font-medium ${
+          className={`flex shrink-0 items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-medium sm:px-3 sm:text-xs ${
             trend === "up"
               ? "bg-[#edf8f1] text-[var(--success)]"
               : "bg-[#fff4e5] text-[var(--warning)]"
           }`}
         >
           {trend === "up" ? (
-            <ArrowUpRight size={14} />
+            <ArrowUpRight size={13} />
           ) : (
-            <ArrowDownRight size={14} />
+            <ArrowDownRight size={13} />
           )}
 
-          {change}
+          <span>{change}</span>
         </div>
       </div>
 
-      <div className="mt-8">
-        <p className="text-sm text-[var(--text-muted)]">
+      <div className="mt-6 sm:mt-8">
+        <p className="text-xs text-[var(--text-muted)] sm:text-sm">
           {title}
         </p>
 
-        <h2 className="mt-2 text-4xl font-semibold tracking-[-0.03em] text-[var(--navy)]">
+        <h2 className="mt-2 break-words text-3xl font-semibold tracking-[-0.03em] text-[var(--navy)] sm:text-4xl">
           {value}
         </h2>
 
-        <p className="mt-3 text-sm leading-6 text-[var(--text-secondary)]">
+        <p className="mt-3 text-xs leading-5 text-[var(--text-secondary)] sm:text-sm sm:leading-6">
           {description}
         </p>
       </div>

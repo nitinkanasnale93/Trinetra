@@ -103,17 +103,17 @@ export default function SettingsPage() {
 
   return (
     <AppShell>
-      <div className="flex items-end justify-between gap-6">
+      <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
         <div>
           <p className="mb-2 text-sm text-[var(--text-secondary)]">
             Platform configuration
           </p>
 
-          <h1 className="text-[32px] font-medium tracking-[-0.04em] text-[var(--navy)]">
+          <h1 className="text-3xl font-medium tracking-[-0.04em] text-[var(--navy)] sm:text-[32px]">
             Settings
           </h1>
 
-          <p className="mt-2 text-[15px] text-[var(--text-secondary)]">
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-[var(--text-secondary)] sm:text-[15px]">
             Manage TRINETRA platform preferences and configuration.
           </p>
         </div>
@@ -121,7 +121,7 @@ export default function SettingsPage() {
         <button
           type="button"
           onClick={saveSettings}
-          className={`flex h-11 min-w-[150px] items-center justify-center gap-2 rounded-xl px-4 text-sm font-medium text-white transition ${
+          className={`flex h-11 w-full items-center justify-center gap-2 rounded-xl px-4 text-sm font-medium text-white transition sm:w-auto ${
             saved
               ? "bg-[var(--success)]"
               : "bg-[var(--navy)] hover:opacity-90"
@@ -141,10 +141,10 @@ export default function SettingsPage() {
         </button>
       </div>
 
-      <section className="mt-9 grid grid-cols-[300px_minmax(0,1fr)] gap-4">
+      <section className="mt-9 grid grid-cols-1 gap-4 xl:grid-cols-[300px_minmax(0,1fr)]">
         {/* Settings Navigation */}
 
-        <aside className="h-fit rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-3">
+        <aside className="h-fit rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-3 xl:sticky xl:top-24">
           <div className="px-3 pb-3 pt-2">
             <p className="text-[10px] font-medium uppercase tracking-[0.12em] text-[var(--text-muted)]">
               Configuration
@@ -200,7 +200,7 @@ export default function SettingsPage() {
                       {section.name}
                     </p>
 
-                    <p className="mt-0.5 truncate text-[10px] text-[var(--text-muted)]">
+                    <p className="mt-0.5 text-[10px] leading-4 text-[var(--text-muted)]">
                       {section.description}
                     </p>
                   </div>
@@ -240,7 +240,7 @@ export default function SettingsPage() {
               description="Manage the analyst information displayed across the TRINETRA interface."
               icon={UserRound}
             >
-              <div className="grid grid-cols-2 gap-5">
+              <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                 <Field label="Display name">
                   <input
                     value={name}
@@ -273,7 +273,7 @@ export default function SettingsPage() {
                   </select>
                 </Field>
 
-                <div className="col-span-2">
+                <div className="md:col-span-2">
                   <Field label="Workspace">
                     <input
                       value={workspace}
@@ -291,7 +291,7 @@ export default function SettingsPage() {
                   Analyst preview
                 </p>
 
-                <div className="mt-4 flex items-center gap-4">
+                <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:items-center">
                   <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--navy)] text-sm font-medium text-white">
                     {getInitials(name)}
                   </div>
@@ -398,7 +398,7 @@ export default function SettingsPage() {
               description="Review the dataset and default analysis window used by the demonstration workspace."
               icon={Database}
             >
-              <div className="grid grid-cols-2 gap-5">
+              <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                 <Field label="Active dataset">
                   <select
                     value={dataset}
@@ -511,7 +511,7 @@ function SettingsContent({
 }) {
   return (
     <>
-      <div className="border-b border-[var(--border)] px-7 py-6">
+      <div className="border-b border-[var(--border)] px-5 py-6 sm:px-7">
         <div className="flex items-center gap-2">
           <Icon
             size={15}
@@ -523,7 +523,7 @@ function SettingsContent({
           </p>
         </div>
 
-        <h2 className="mt-4 text-[22px] font-medium tracking-[-0.03em] text-[var(--navy)]">
+        <h2 className="mt-4 break-words text-xl font-medium tracking-[-0.03em] text-[var(--navy)] sm:text-[22px]">
           {title}
         </h2>
 
@@ -532,7 +532,7 @@ function SettingsContent({
         </p>
       </div>
 
-      <div className="p-7">{children}</div>
+      <div className="p-5 sm:p-7">{children}</div>
     </>
   );
 }
@@ -570,7 +570,7 @@ function Threshold({
 }) {
   return (
     <div>
-      <div className="flex items-start gap-4">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--gold-soft)]">
           <Icon
             size={16}
@@ -579,7 +579,7 @@ function Threshold({
         </div>
 
         <div className="flex-1">
-          <div className="flex items-start justify-between gap-5">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div>
               <p className="text-sm font-medium text-[var(--navy)]">
                 {label}
@@ -590,8 +590,7 @@ function Threshold({
               </p>
             </div>
 
-            <span className="min-w-[52px] rounded-xl border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-center text-sm font-medium text-[var(--navy)]">
-              {value}%
+            <span className="w-fit rounded-xl border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-center text-sm font-medium text-[var(--navy)]">              {value}%
             </span>
           </div>
 
@@ -623,7 +622,7 @@ function ToggleSetting({
   onChange: (checked: boolean) => void;
 }) {
   return (
-    <div className="flex items-center justify-between gap-6 py-3">
+    <div className="flex flex-col gap-4 py-3 sm:flex-row sm:items-center sm:justify-between">
       <div>
         <p className="text-sm font-medium text-[var(--navy)]">
           {title}

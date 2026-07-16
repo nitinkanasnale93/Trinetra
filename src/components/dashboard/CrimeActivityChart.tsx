@@ -10,46 +10,66 @@ import {
   YAxis,
 } from "recharts";
 
-const data = [
-  { day: "Mon", incidents: 42 },
-  { day: "Tue", incidents: 51 },
-  { day: "Wed", incidents: 46 },
-  { day: "Thu", incidents: 68 },
-  { day: "Fri", incidents: 61 },
-  { day: "Sat", incidents: 79 },
-  { day: "Sun", incidents: 72 },
-];
+export type CrimeActivityPoint = {
+  date: string;
+  label: string;
+  incidents: number;
+};
 
-export default function CrimeActivityChart() {
+type CrimeActivityChartProps = {
+  data: CrimeActivityPoint[];
+};
+
+export default function CrimeActivityChart({
+  data,
+}: CrimeActivityChartProps) {
+  const totalIncidents = data.reduce(
+    (total, point) => total + point.incidents,
+    0
+  );
+
   return (
-    <section className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6">
-      <div className="flex items-start justify-between">
+    <section className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 sm:p-5 lg:p-6">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <h2 className="text-[16px] font-medium tracking-[-0.02em] text-[var(--navy)]">
+          <h2 className="text-[15px] font-medium tracking-[-0.02em] text-[var(--navy)] sm:text-[16px]">
             Crime activity
           </h2>
 
-          <p className="mt-1 text-xs text-[var(--text-muted)]">
-            Recorded incidents over the last 7 days
+          <p className="mt-1 text-xs leading-5 text-[var(--text-muted)]">
+            Verified incident activity across the current dataset
           </p>
         </div>
 
-        <button className="rounded-lg border border-[var(--border)] px-3 py-2 text-xs text-[var(--text-secondary)] transition hover:bg-[var(--surface-soft)]">
-          Last 7 days
-        </button>
+        <div className="self-start rounded-lg border border-[var(--border)] px-3 py-2 text-xs text-[var(--text-secondary)]">
+          {totalIncidents} incidents
+        </div>
       </div>
 
-      <div className="mt-8 h-[280px] w-full">
+      <div className="mt-6 h-[240px] w-full sm:h-[260px] lg:mt-8 lg:h-[280px]">
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={data}>
+          <AreaChart
+            data={data}
+            margin={{
+              top: 10,
+              right: 10,
+              left: -10,
+              bottom: 0,
+            }}
+          >
             <defs>
-              <linearGradient id="crimeGradient" x1="0" y1="0" x2="0" y2="1">
+              <linearGradient
+                id="crimeGradient"
+                x1="0"
+                y1="0"
+                x2="0"
+                y2="1"
+              >
                 <stop
                   offset="5%"
                   stopColor="#14213d"
                   stopOpacity={0.14}
                 />
-
                 <stop
                   offset="95%"
                   stopColor="#14213d"
@@ -65,9 +85,11 @@ export default function CrimeActivityChart() {
             />
 
             <XAxis
-              dataKey="day"
+              dataKey="label"
               axisLine={false}
               tickLine={false}
+              interval="preserveStartEnd"
+              minTickGap={20}
               tick={{
                 fill: "#98a2b3",
                 fontSize: 11,
@@ -76,13 +98,15 @@ export default function CrimeActivityChart() {
             />
 
             <YAxis
+              allowDecimals={false}
+              domain={[0, "auto"]}
               axisLine={false}
               tickLine={false}
+              width={28}
               tick={{
                 fill: "#98a2b3",
                 fontSize: 11,
               }}
-              width={30}
             />
 
             <Tooltip
@@ -96,6 +120,20 @@ export default function CrimeActivityChart() {
                 boxShadow: "none",
                 fontSize: "12px",
               }}
+              labelFormatter={(_, payload) => {
+                const point =
+                  payload?.[0]?.payload as
+                    | CrimeActivityPoint
+                    | undefined;
+
+                return point?.date || "";
+              }}
+              formatter={(value) => [
+                `${Number(value)} incident${
+                  Number(value) === 1 ? "" : "s"
+                }`,
+                "Verified activity",
+              ]}
             />
 
             <Area

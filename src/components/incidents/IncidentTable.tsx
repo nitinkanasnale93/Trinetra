@@ -4,7 +4,6 @@ import { useState } from "react";
 import { ArrowUpRight, MoreHorizontal } from "lucide-react";
 
 import IncidentDrawer from "@/components/incidents/IncidentDrawer";
-import { incidents } from "@/lib/incidents";
 import { Incident, IncidentRisk } from "@/types/incident";
 
 const riskStyles: Record<IncidentRisk, string> = {
@@ -15,10 +14,12 @@ const riskStyles: Record<IncidentRisk, string> = {
 };
 
 type IncidentTableProps = {
+  incidents: Incident[];
   searchQuery: string;
 };
 
 export default function IncidentTable({
+  incidents,
   searchQuery,
 }: IncidentTableProps) {
   const [selectedIncident, setSelectedIncident] =

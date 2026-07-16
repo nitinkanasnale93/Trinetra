@@ -97,15 +97,15 @@ export default function PredictionsPage() {
         Predictive intelligence
       </p>
 
-      <h1 className="text-[32px] font-medium tracking-[-0.04em] text-[var(--navy)]">
+      <h1 className="text-3xl font-medium tracking-[-0.04em] text-[var(--navy)] sm:text-[32px]">
         Predictions
       </h1>
 
-      <p className="mt-2 text-[15px] text-[var(--text-secondary)]">
+      <p className="mt-2 max-w-2xl text-sm leading-6 text-[var(--text-secondary)] sm:text-[15px]">
         Review data-driven risk forecasts and the evidence behind them.
       </p>
 
-      <section className="mt-9 grid grid-cols-[1fr_360px] gap-4">
+      <section className="mt-9 grid grid-cols-1 gap-4 xl:grid-cols-[minmax(0,1fr)_360px]">
         {/* Active Predictions */}
 
         <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)]">
@@ -130,7 +130,7 @@ export default function PredictionsPage() {
                 onClick={() =>
                   setSelectedPrediction(prediction)
                 }
-                className={`group flex w-full items-center gap-5 border-b border-[var(--border)] px-6 py-6 text-left transition last:border-0 ${
+                className={`group flex w-full flex-col items-start gap-4 border-b border-[var(--border)] px-6 py-6 text-left transition last:border-0 sm:flex-row sm:items-center ${
                   isSelected
                     ? "bg-[var(--gold-soft)]/35"
                     : "hover:bg-[var(--surface-soft)]"
@@ -147,7 +147,7 @@ export default function PredictionsPage() {
                 </div>
 
                 <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-2">
                     <p className="text-sm font-medium text-[var(--navy)]">
                       {prediction.prediction}
                     </p>
@@ -162,44 +162,47 @@ export default function PredictionsPage() {
                   </p>
                 </div>
 
-                <div className="w-32">
-                  <div className="flex justify-between text-xs">
-                    <span className="text-[var(--text-muted)]">
-                      Probability
-                    </span>
+                <div className="w-full sm:w-32">
+  <div className="flex justify-between text-xs">
+    <span className="text-[var(--text-muted)]">
+      Probability
+    </span>
 
-                    <span className="font-medium text-[var(--navy)]">
-                      {prediction.probability}%
-                    </span>
-                  </div>
+    <span className="font-medium text-[var(--navy)]">
+      {prediction.probability}%
+    </span>
+  </div>
 
-                  <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-[var(--surface-soft)]">
-                    <div
-                      className="h-full rounded-full bg-[var(--gold)] transition-all duration-700"
-                      style={{
-                        width: `${prediction.probability}%`,
-                      }}
-                    />
-                  </div>
-                </div>
+  <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-[var(--surface-soft)]">
+    <div
+      className="h-full rounded-full bg-[var(--gold)] transition-all duration-700"
+      style={{
+        width: `${prediction.probability}%`,
+      }}
+    />
+  </div>
+</div>
 
-                <ArrowUpRight
-                  size={16}
-                  className={`text-[var(--text-muted)] transition ${
-                    isSelected
-                      ? "opacity-100"
-                      : "opacity-0 group-hover:opacity-100"
-                  }`}
-                />
-              </button>
-            );
-          })}
-        </div>
+<div className="self-end sm:self-auto">
+  <ArrowUpRight
+    size={16}
+    className={`text-[var(--text-muted)] transition ${
+      isSelected
+        ? "opacity-100"
+        : "opacity-0 group-hover:opacity-100"
+    }`}
+  />
+</div>
 
-        {/* AI Trust Engine */}
+</button>
+);
+})}
+</div>
 
-        <aside className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6">
-          <div className="flex items-center gap-2">
+{/* AI Trust Engine */}
+
+        <aside className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 xl:sticky xl:top-24">
+          <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-2">
             <Sparkles
               size={16}
               className="text-[var(--gold)]"
@@ -223,7 +226,7 @@ export default function PredictionsPage() {
           </p>
 
           <div className="mt-7 flex items-center justify-center">
-            <div className="flex h-40 w-40 items-center justify-center rounded-full border-[14px] border-[var(--gold-soft)]">
+            <div className="flex h-32 w-32 sm:h-40 sm:w-40 items-center justify-center rounded-full border-[14px] border-[var(--gold-soft)]">
               <div className="text-center">
                 <p className="text-4xl font-medium tracking-[-0.05em] text-[var(--navy)]">
                   {selectedPrediction.trustScore}%
@@ -268,9 +271,9 @@ export default function PredictionsPage() {
 
       {/* Prediction Analysis */}
 
-      <section className="mt-4 grid grid-cols-[1fr_360px] gap-4">
+      <section className="mt-6 grid grid-cols-1 gap-4 xl:grid-cols-[minmax(0,1fr)_360px]">
         <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6">
-          <div className="flex items-center gap-2">
+          <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-2">
             <BrainCircuit
               size={16}
               className="text-[var(--gold)]"
@@ -290,7 +293,7 @@ export default function PredictionsPage() {
             {selectedPrediction.window}
           </p>
 
-          <div className="mt-7 grid grid-cols-3 gap-3">
+          <div className="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-3">
             <PredictionSignal
               icon={MapPinned}
               label="Forecast zone"
@@ -325,8 +328,8 @@ export default function PredictionsPage() {
           </div>
         </div>
 
-        <aside className="rounded-2xl border border-[var(--border)] bg-[var(--gold-soft)]/35 p-6">
-          <div className="flex items-center gap-2">
+        <aside className="rounded-2xl border border-[var(--border)] bg-[var(--gold-soft)]/35 p-6 xl:sticky xl:top-24">
+          <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-2">
             <ShieldCheck
               size={16}
               className="text-[var(--gold)]"
@@ -421,7 +424,7 @@ function PredictionSignal({
   value: string;
 }) {
   return (
-    <div className="rounded-xl border border-[var(--border)] p-4">
+    <div className="rounded-xl border border-[var(--border)] p-4 min-w-0">
       <Icon
         size={16}
         className="text-[var(--gold)]"
@@ -431,7 +434,7 @@ function PredictionSignal({
         {label}
       </p>
 
-      <p className="mt-1 text-sm font-medium text-[var(--navy)]">
+      <p className="mt-1 break-words text-sm font-medium text-[var(--navy)]">
         {value}
       </p>
     </div>

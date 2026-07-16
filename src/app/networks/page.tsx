@@ -71,9 +71,8 @@ const connections = [
 export default function NetworksPage() {
   const [selected, setSelected] = useState(nodes[0]);
   const [search, setSearch] = useState("");
-  const [focusNodeId, setFocusNodeId] = useState<string | null>(
-    null
-  );
+  const [focusNodeId, setFocusNodeId] =
+    useState<string | null>(null);
 
   const filteredNodes = nodes.filter((node) => {
     const query = search.trim().toLowerCase();
@@ -119,59 +118,66 @@ export default function NetworksPage() {
 
   return (
     <AppShell>
-      <div className="flex items-end justify-between">
+      <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
         <div>
           <p className="mb-2 text-sm text-[var(--text-secondary)]">
             Relationship intelligence
           </p>
 
-          <h1 className="text-[32px] font-medium tracking-[-0.04em] text-[var(--navy)]">
+          <h1 className="text-3xl font-medium tracking-[-0.04em] text-[var(--navy)] sm:text-[32px]">
             Networks
           </h1>
 
-          <p className="mt-2 text-[15px] text-[var(--text-secondary)]">
-            Explore relationships between offenders, incidents,
-            and entities.
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-[var(--text-secondary)] sm:text-[15px]">
+            Explore relationships between offenders,
+            incidents, and entities.
           </p>
         </div>
 
         <button
           type="button"
-          className="flex h-11 items-center gap-2 rounded-xl bg-[var(--navy)] px-4 text-sm text-white transition hover:opacity-90"
+          className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[var(--navy)] px-4 text-sm text-white transition hover:opacity-90 sm:w-auto"
         >
           <Share2 size={16} />
-
           Export network
         </button>
       </div>
 
-      <NetworkAnalytics
-        entities={nodes.length}
-        connections={connections.length}
-        highRisk={highRisk}
-        averageConfidence={averageConfidence}
-      />
-
-      <section className="mt-4 grid min-h-[680px] grid-cols-[1fr_320px] overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)]">
-        <NetworkCanvas
-          nodes={nodes}
-          selected={selected}
-          onSelect={handleNodeSelect}
-          onSearchSelect={handleSearchSelect}
-          search={search}
-          setSearch={setSearch}
-          filteredNodes={filteredNodes}
-          focusNodeId={focusNodeId}
+      <section className="mt-9">
+        <NetworkAnalytics
+          entities={nodes.length}
+          connections={connections.length}
+          highRisk={highRisk}
+          averageConfidence={averageConfidence}
         />
+      </section>
 
-        <aside className="border-l border-[var(--border)] p-6">
+      <section className="mt-6 grid overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] xl:min-h-[680px] xl:grid-cols-[minmax(0,1fr)_340px]">
+
+        <div className="min-w-0">
+
+                    <NetworkCanvas
+            nodes={nodes}
+            selected={selected}
+            onSelect={handleNodeSelect}
+            onSearchSelect={handleSearchSelect}
+            search={search}
+            setSearch={setSearch}
+            filteredNodes={filteredNodes}
+            focusNodeId={focusNodeId}
+          />
+        </div>
+
+        <aside className="border-t border-[var(--border)] p-6 xl:border-l xl:border-t-0">
           <EntityPanel entity={selected} />
         </aside>
+
       </section>
 
-      <section className="mt-6">
+      <section className="mt-8">
         <Timeline />
       </section>
+
     </AppShell>
   );
 }

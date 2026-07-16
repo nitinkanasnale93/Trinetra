@@ -117,13 +117,13 @@ export default function NetworkCanvas({
   } = getLayoutedElements(flowNodes, flowEdges);
 
   return (
-    <div className="relative h-full overflow-hidden bg-[#f7f5f1]">
+    <div className="relative h-[450px] sm:h-[550px] lg:h-[650px] xl:h-full min-h-[450px] overflow-hidden rounded-2xl bg-[#f7f5f1]">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,var(--gold-soft),transparent_70%)] opacity-60" />
 
       {/* Search */}
 
-      <div className="absolute left-5 top-5 z-30 w-[280px]">
-        <div className="flex h-11 items-center gap-2 rounded-xl border border-[var(--border)] bg-white px-3 shadow-sm">
+      <div className="absolute left-4 right-4 top-4 z-30 sm:left-5 sm:right-auto sm:w-[320px]">
+        <div className="flex h-11 w-full items-center gap-2 rounded-xl border border-[var(--border)] bg-white px-3 shadow-md backdrop-blur">
           <Search
             size={16}
             className="text-[var(--text-muted)]"
@@ -135,12 +135,12 @@ export default function NetworkCanvas({
               setSearch(event.target.value)
             }
             placeholder="Search entity..."
-            className="w-full bg-transparent text-sm outline-none"
+            className="w-full bg-transparent text-sm outline-none placeholder:text-[var(--text-muted)]"
           />
         </div>
 
         {search && (
-          <div className="mt-2 overflow-hidden rounded-xl border border-[var(--border)] bg-white shadow-lg">
+          <div className="mt-2 max-h-72 overflow-y-auto overflow-x-hidden rounded-xl border border-[var(--border)] bg-white shadow-xl">
             {filteredNodes.length === 0 ? (
               <div className="px-4 py-3 text-sm text-[var(--text-muted)]">
                 No entity found
@@ -153,13 +153,13 @@ export default function NetworkCanvas({
                   onClick={() => {
                     onSearchSelect(node);
                   }}
-                  className="flex w-full items-center justify-between px-4 py-3 text-left transition hover:bg-[var(--surface-soft)]"
+                  className="flex w-full flex-col items-start gap-1 px-4 py-3 text-left transition hover:bg-[var(--surface-soft)] sm:flex-row sm:items-center sm:justify-between"
                 >
-                  <span className="font-medium text-[var(--navy)]">
+                  <span className="truncate font-medium text-[var(--navy)]">
                     {node.id}
                   </span>
 
-                  <span className="text-xs text-[var(--text-muted)]">
+                  <span className="truncate text-xs text-[var(--text-muted)]">
                     {node.label}
                   </span>
                 </button>
@@ -171,22 +171,24 @@ export default function NetworkCanvas({
 
       {/* Network Graph */}
 
-      <GraphView
-        nodes={layoutedNodes}
-        edges={layoutedEdges}
-        nodeTypes={nodeTypes}
-        selected={selected.id}
-        focusNodeId={focusNodeId}
-        onNodeClick={(_event: React.MouseEvent, node: Node) => {
-          const entity = nodes.find(
-            (item) => item.id === node.id
-          );
+      <div className="h-full w-full overflow-hidden">
+        <GraphView
+          nodes={layoutedNodes}
+          edges={layoutedEdges}
+          nodeTypes={nodeTypes}
+          selected={selected.id}
+          focusNodeId={focusNodeId}
+          onNodeClick={(_event: React.MouseEvent, node: Node) => {
+            const entity = nodes.find(
+              (item) => item.id === node.id
+            );
 
-          if (entity) {
-            onSelect(entity);
-          }
-        }}
-      />
+            if (entity) {
+              onSelect(entity);
+            }
+          }}
+        />
+      </div>
     </div>
   );
 }

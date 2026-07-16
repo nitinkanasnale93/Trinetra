@@ -4,5 +4,12 @@
       "source": ".",
       "name": "trinetra"
     }
-  ]
+  ],
+  "functions": {
+    "targets": [
+      "trinetra_function"
+    ],
+    "ignore": [],
+    "source": "functions"
+  }
 }
