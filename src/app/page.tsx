@@ -136,7 +136,7 @@ type DistrictActivity = {
 
 const API_BASE_URL =
   process.env.TRINETRA_API_BASE_URL ??
-  "http://localhost:3000/server/trinetra_function";
+  "https://trinetra-60073522764.development.catalystserverless.in/server/trinetra_function";
 
 
 async function getIntelligenceOverview(): Promise<IntelligenceOverview> {
