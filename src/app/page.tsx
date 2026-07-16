@@ -134,11 +134,10 @@ type DistrictActivity = {
   risk: "Elevated" | "Moderate" | "Low";
 };
 
-const API_BASE_URL = process.env.TRINETRA_API_BASE_URL;
+const API_BASE_URL =
+  process.env.TRINETRA_API_BASE_URL ??
+  "http://localhost:3000/server/trinetra_function";
 
-if (!API_BASE_URL) {
-  throw new Error("TRINETRA_API_BASE_URL is not configured");
-}
 
 async function getIntelligenceOverview(): Promise<IntelligenceOverview> {
   const response = await fetch(
