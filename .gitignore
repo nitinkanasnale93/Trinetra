@@ -50,3 +50,4 @@ Thumbs.db
 
 .build/
 catalyst-debug.log
+functions/trinetra_function/catalyst-debug.log
