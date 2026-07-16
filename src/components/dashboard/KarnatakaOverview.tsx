@@ -136,19 +136,17 @@ function getGeometryPositions(
   geometry: GeoJsonGeometry
 ): GeoJsonPosition[] {
   if (geometry.type === "Polygon") {
-    return geometry.coordinates.flat();
+    return geometry.coordinates.flat(1) as GeoJsonPosition[];
   }
 
-  return geometry.coordinates.flat(2);
+  return geometry.coordinates.flat(2) as GeoJsonPosition[];
 }
 
 function createPath(
   geometry: GeoJsonGeometry,
-  project: (
-    position: GeoJsonPosition
-  ) => [number, number]
+  project: (position: GeoJsonPosition) => [number, number]
 ) {
-  const polygons: GeoJsonPosition[][][] =
+  const polygons =
     geometry.type === "Polygon"
       ? [geometry.coordinates]
       : geometry.coordinates;
@@ -157,22 +155,15 @@ function createPath(
     .map((polygon) =>
       polygon
         .map((ring) => {
-          if (!ring.length) return "";
+          if (ring.length === 0) return "";
 
-          const projected = ring.map(project);
+          const projected = ring.map((point) => project(point));
 
           const [firstX, firstY] = projected[0];
 
-          return `M ${firstX.toFixed(
-            2
-          )} ${firstY.toFixed(
-            2
-          )} ${projected
+          return `M ${firstX.toFixed(2)} ${firstY.toFixed(2)} ${projected
             .slice(1)
-            .map(
-              ([x, y]) =>
-                `L ${x.toFixed(2)} ${y.toFixed(2)}`
-            )
+            .map(([x, y]) => `L ${x.toFixed(2)} ${y.toFixed(2)}`)
             .join(" ")} Z`;
         })
         .join(" ")

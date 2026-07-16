@@ -1,3 +1,12 @@
+import dynamic from "next/dynamic";
+
+const DashboardScene = dynamic(
+  () => import("@/components/three/DashboardScene"),
+  {
+    ssr: false,
+  }
+);
+
 import {
   BellRing,
   MapPinned,
@@ -18,7 +27,7 @@ import PageTransition from "@/components/motion/PageTransition";
 import Reveal from "@/components/motion/Reveal";
 import TiltCard from "@/components/motion/TiltCard";
 
-import DashboardScene from "@/components/three/DashboardScene";
+
 
 import Badge from "@/components/ui/Badge";
 import PrimaryButton from "@/components/ui/PrimaryButton";
