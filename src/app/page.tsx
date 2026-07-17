@@ -419,9 +419,9 @@ export default async function Home() {
           <div className="mx-auto max-w-[1400px]">
             <PageTransition>
               <section className="relative overflow-hidden rounded-[32px] border border-[var(--border)] bg-white px-6 py-8 sm:px-8 sm:py-10 lg:px-10 lg:py-12 xl:px-12 xl:py-12 shadow-[var(--shadow-sm)]">
-                <div className="pointer-events-none absolute right-0 top-0 hidden h-full w-[45%] xl:block">
+                {/* <div className="pointer-events-none absolute right-0 top-0 hidden h-full w-[45%] xl:block">
                   <DashboardScene />
-                </div>
+                </div> */}
 
                 <div className="relative z-10 max-w-[620px]">
                   <Badge>
