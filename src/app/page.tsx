@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import DashboardScene from "@/components/three/DashboardSceneClient";
 
 import {
@@ -142,87 +143,131 @@ const API_BASE_URL =
 
 
 async function getIntelligenceOverview(): Promise<IntelligenceOverview> {
-  console.log("API_BASE_URL =", API_BASE_URL);
-  const response = await fetch(
-    `${API_BASE_URL}/intelligence-overview`,
-    {
-      cache: "no-store",
-    }
-  );
+  try {
+    console.log("API_BASE_URL =", API_BASE_URL);
 
-  if (!response.ok) {
-    throw new Error(
-      `Failed to load intelligence overview: ${response.status}`
+    const response = await fetch(
+      `${API_BASE_URL}/intelligence-overview`,
+      {
+        cache: "no-store",
+      }
     );
-  }
 
-  const data: OverviewResponse = await response.json();
+    if (!response.ok) {
+      console.warn(`Overview API failed: ${response.status}`);
+      return {
+      total_incidents: 0,
+      verified_incidents: 0,
+      districts_covered: 0,
+      patterns_detected: 0,
+      total_alerts: 0,
+      open_alerts: 0,
+      high_severity_alerts: 0,
+      average_data_quality: 0,
+    };
+    }
 
-  if (!data.success) {
-    throw new Error("TRINETRA overview API returned an error");
-  }
+    const data: OverviewResponse = await response.json();
 
-  return data.overview;
+    if (!data.success) {
+      return {
+      total_incidents: 0,
+      verified_incidents: 0,
+      districts_covered: 0,
+      patterns_detected: 0,
+      total_alerts: 0,
+      open_alerts: 0,
+      high_severity_alerts: 0,
+      average_data_quality: 0,
+    };
+    }
+
+    return data.overview;
+  } catch (err) {
+  console.error("Overview API error:", err);
+  return {
+    total_incidents: 0,
+    verified_incidents: 0,
+    districts_covered: 0,
+    patterns_detected: 0,
+    total_alerts: 0,
+    open_alerts: 0,
+    high_severity_alerts: 0,
+    average_data_quality: 0,
+  };
+}
 }
 
 async function getAlerts(): Promise<Alert[]> {
-  const response = await fetch(`${API_BASE_URL}/alerts`, {
-    cache: "no-store",
-  });
+  try {
+    const response = await fetch(`${API_BASE_URL}/alerts`, {
+      cache: "no-store",
+    });
 
-  if (!response.ok) {
-    throw new Error(
-      `Failed to load intelligence alerts: ${response.status}`
-    );
+    if (!response.ok) {
+      console.warn(`Alerts API failed: ${response.status}`);
+      return [];
+    }
+
+    const data: AlertsResponse = await response.json();
+
+    if (!data.success) {
+      return [];
+    }
+
+    return data.alerts;
+  } catch (err) {
+    console.error("Alerts API error:", err);
+    return [];
   }
-
-  const data: AlertsResponse = await response.json();
-
-  if (!data.success) {
-    throw new Error("TRINETRA alerts API returned an error");
-  }
-
-  return data.alerts;
 }
 
 async function getIncidents(): Promise<Incident[]> {
-  const response = await fetch(`${API_BASE_URL}/incidents`, {
-    cache: "no-store",
-  });
+  try {
+    const response = await fetch(`${API_BASE_URL}/incidents`, {
+      cache: "no-store",
+    });
 
-  if (!response.ok) {
-    throw new Error(
-      `Failed to load incidents: ${response.status}`
-    );
+    if (!response.ok) {
+      console.warn(`Incidents API failed: ${response.status}`);
+      return [];
+    }
+
+    const data: IncidentsResponse = await response.json();
+
+    if (!data.success) {
+      return [];
+    }
+
+    return data.incidents;
+  } catch (err) {
+    console.error("Incidents API error:", err);
+    return [];
   }
-
-  const data: IncidentsResponse = await response.json();
-
-  if (!data.success) {
-    throw new Error("TRINETRA incidents API returned an error");
-  }
-
-  return data.incidents;
 }
 
 async function getPatterns(): Promise<CrimePattern[]> {
-  const response = await fetch(`${API_BASE_URL}/patterns`, {
-    cache: "no-store",
-  });
+  try {
+    const response = await fetch(`${API_BASE_URL}/patterns`, {
+      cache: "no-store",
+    });
 
-  if (!response.ok) {
-    throw new Error(
-      `Failed to load crime patterns: ${response.status}`
-    );
+    if (!response.ok) {
+      console.warn(`Patterns API failed: ${response.status}`);
+      return [];
+    }
+
+    const data: PatternsResponse = await response.json();
+
+    if (!data.success) {
+      return [];
+    }
+
+    return data.patterns;
+  } catch (err) {
+    console.error("Patterns API error:", err);
+    return [];
   }
-
-  const data: PatternsResponse = await response.json();
-
-  if (!data.success) {
-    throw new Error("TRINETRA patterns API returned an error");
-  }
-
-  return data.patterns;
 }
 
 export default async function Home() {
