@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+
 const { spawn } = require("child_process");
 
 const port = process.env.X_ZOHO_CATALYST_LISTEN_PORT || "3000";
 
 const server = spawn(
   process.execPath,
-  [".next/standalone/server.js"],
+  ["server.js"],
   {
     stdio: "inherit",
     env: {
