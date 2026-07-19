@@ -277,17 +277,7 @@ export default async function Home() {
       getIncidents(),
       getPatterns(),
     ]);
-    return (
-  <div
-    style={{
-      padding: "40px",
-      fontSize: "24px",
-      fontFamily: "sans-serif",
-    }}
-  >
-    TRINETRA is working!
-  </div>
-);
+    
 
   const highestPriorityAlert = alerts
     .filter((alert) => alert.alert_status === "OPEN")
