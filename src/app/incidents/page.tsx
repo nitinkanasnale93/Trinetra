@@ -1,5 +1,7 @@
 "use client";
 
+import NewIncidentDialog from "@/components/incidents/NewIncidentDialog";
+
 import { useEffect, useState } from "react";
 import { Download, Plus } from "lucide-react";
 
@@ -32,6 +34,7 @@ export default function IncidentsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [incidents, setIncidents] = useState<Incident[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showNewIncident, setShowNewIncident] = useState(false);
 
   useEffect(() => {
     async function loadIncidents() {
@@ -119,32 +122,41 @@ export default function IncidentsPage() {
                   Export
                 </button>
 
-                <button className="flex h-11 items-center gap-2 rounded-xl bg-[var(--navy)] px-4 text-sm text-white transition hover:opacity-90">
-                  <Plus size={16} strokeWidth={1.8} />
-                  New incident
-                </button>
+                <button
+  onClick={() => setShowNewIncident(true)}
+  className="flex h-11 items-center gap-2 rounded-xl bg-[var(--navy)] px-4 text-sm text-white transition hover:opacity-90"
+>
+  <Plus size={16} strokeWidth={1.8} />
+  New incident
+</button>
               </div>
             </div>
 
-            <section className="mt-9">
-              <IncidentFilters
-                searchQuery={searchQuery}
-                onSearchChange={setSearchQuery}
-              />
-            </section>
+           {showNewIncident && (
+  <div className="mb-6">
+    <NewIncidentDialog />
+  </div>
+)}
 
-            <section className="mt-4 overflow-hidden">
-              {loading ? (
-                <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 text-center text-sm text-[var(--text-muted)]">
-                  Loading incidents...
-                </div>
-              ) : (
-                <IncidentTable
-                  incidents={incidents}
-                  searchQuery={searchQuery}
-                />
-              )}
-            </section>
+<section className="mt-9">
+  <IncidentFilters
+    searchQuery={searchQuery}
+    onSearchChange={setSearchQuery}
+  />
+</section>
+
+<section className="mt-4 overflow-hidden">
+  {loading ? (
+    <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 text-center text-sm text-[var(--text-muted)]">
+      Loading incidents...
+    </div>
+  ) : (
+    <IncidentTable
+      incidents={incidents}
+      searchQuery={searchQuery}
+    />
+  )}
+</section>
           </div>
         </div>
       </main>
